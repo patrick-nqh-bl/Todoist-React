@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^7.14.0",
+    "@testing-library/react": "^8.0.5",
     "node-sass": "^4.12.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -16,6 +17,26 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js",
+      "!src/hooks/*.js",
+      "!src/context/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "coverageReporters": [
+      "html",
+      "text"
+    ]
   },
   "browserslist": {
     "production": [

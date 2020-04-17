@@ -29,8 +29,9 @@ ul {
 // Variables
 $generic-box-shadow: rgbs(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
 $generic-border: 1px solid #f1f1f1;
-$generic-bg: #db4c3f;
+$generic-bg: #6dafe1;
 
+// #db4c3f
 // Mixins
 
 @mixin box-overlay {
@@ -90,6 +91,11 @@ $generic-bg: #db4c3f;
   margin: 2px 5px;
 }
 
+@mixin transparent-button() {
+  background-color: transparent;
+  border: 0;
+}
+
 @mixin task-item() {
   list-style-type: none;
   display: flex;
@@ -122,6 +128,8 @@ $generic-bg: #db4c3f;
     background-color: #282828;
     border-color: transparent;
   }
+
+  
 }
 
 // Header
@@ -189,11 +197,28 @@ header {
           &.settings__add {
             margin-right: 15px;
             font-size: 30px;
+
+            button {
+              @include transparent-button();
+              color: white;
+              cursor: pointer;
+            }
           }
 
-          &.settings__dark-mode svg {
-            width: 20px;
-            height: 20px;
+          &.settings__darkmode {
+            
+            button {
+              @include transparent-button();
+              color: white;
+              cursor: pointer;
+              display: flex;
+              
+              svg {
+                width: 20px;
+                height: 20px;
+              }
+            }
+
           }
         }
       }
@@ -220,17 +245,21 @@ header {
   }
 
   li {
-    padding-left: 10px;
-    padding-right: 15px;
-
     &:hover .sidebar__project-delete {
-      display: block;
+      display: flex;
     }
   }
 
   &__project {
-    padding: 5px 0;
     cursor: pointer;
+    
+    div:nth-child(1) {
+      padding: 5px 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
 
     &-delete {
       margin-left: auto;
@@ -291,7 +320,6 @@ header {
     margin-bottom: 20px;
     display: flex;
     border-bottom: $generic-border;
-    padding-left: 10px;
     cursor: pointer;
 
     span {
@@ -315,21 +343,30 @@ header {
 
   &__generic {
     li {
-      padding: 10px 0 10px 10px;
       list-style-type: none;
       color: #333;
       display: flex;
       cursor: pointer;
       line-height: 1.50;
       font-size: 15px;
+      padding-left: 0;
+      padding-right: 0;
 
-      span:first-of-type {
-        margin-right: 10px;
-
-        svg {
-          width: 18px;
-          height: 18px;
-          color: #555;
+      div:nth-child(1) {
+        display: flex;
+        padding: 10px 0px 10px 10px;
+        width: 100%;
+        
+        span:first-of-type {
+          margin-right: 10px;
+          display: flex;
+          align-items: center;
+  
+          svg {
+            width: 18px;
+            height: 18px;
+            color: #555;
+          }
         }
       }
 
@@ -448,3 +485,180 @@ header {
     }
   }
 }
+
+//Add Task
+
+
+.add-task {
+  &__overlay {
+    background: rgba(102,102,102,0.5);
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    transition: opacity 0.2s ease-in;
+    height: calc(100vh);
+
+    .add-task__main {
+      overflow: visible;
+      margin-bottom: 20px;
+      margin-top: 55px;
+      border-radius: 5px;
+      background-color: white;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      padding: 20px 30px;
+      transform: translate(-50%, -50%);
+
+      .header {
+        font-size: 13px;
+        margin-bottom: 20px;
+        float: left;
+      }
+    }
+
+    .add-task__cancel-x {
+      cursor: pointer;
+      color: gray;
+      float: right;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+
+  &__main {
+    position: relative;
+  }
+
+  &__project, &__date {
+    cursor: pointer;
+    float: right;
+    color: gray;
+    margin: 20px 10px;
+  }
+
+  &__project {
+    margin-right: 0;
+  }
+
+  &__content {
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: white !important;
+    border-radius: 3px;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  &__cancel, &__submit {
+    @include cancel();
+  }
+
+  &__submit {
+    @include btn('90px')
+  }
+}
+
+.add-task__shallow, .add-project {
+  @include no-select();
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.add-task__plus, .add-project__plus {
+  color: #6dafe1;
+  font-size: 18px;
+}
+
+.add-task__text, .add-project__text {
+  display: inline-block;
+  color: #545454;
+  font-size: 14px;
+  margin-left: 15px;
+}
+
+// Task Date
+
+.task-date {
+  @include box-overlay();
+
+  background-color: #fff;
+  width: 200px;
+  right: 0;
+
+  &__list li {
+    @include task-item();
+    padding: 0;
+
+    div:nth-child(1) {
+      padding: 10px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      span:first-of-type {
+        margin-right: 10px;
+  
+        svg {
+          fill: grey;
+        }
+      }
+    }
+  }
+}
+
+// Project Overlay
+
+.project-overlay {
+  @include box-overlay();
+
+  background-color: white;
+
+  &__list li {
+    @include task-item();
+    padding: 0;
+
+    div:nth-child(1) {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+}
+
+// Add Project
+
+.add-project {
+  padding-left: 13px;
+  padding-right: 20px;
+  margin-top: 20px;
+
+  &__input {
+    margin-bottom: 20px;
+  }
+
+  &__name {
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: white !important;
+    border-radius: 3px;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  &__submit {
+    @include btn('100px');
+  }
+
+  &__cancel {
+    @include cancel();
+  }
+}
+
+
