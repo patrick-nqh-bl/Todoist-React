@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaChevronDown,
   FaInbox,
@@ -7,7 +7,6 @@ import {
 } from "react-icons/fa";
 import { Projects } from "../Projects";
 import { useSelectedProjectValue } from "../../context";
-import { useState } from "react/cjs/react.development";
 import { AddProject } from "../AddProject";
 
 export const Sidebar = () => {
